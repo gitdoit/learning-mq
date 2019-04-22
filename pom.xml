@@ -16,6 +16,7 @@
 
     <properties>
         <java.version>1.8</java.version>
+        <rocketmq.version>4.0.0-incubating</rocketmq.version>
     </properties>
 
     <dependencies>
@@ -23,7 +24,10 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter</artifactId>
         </dependency>
-
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
@@ -33,6 +37,24 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
+        </dependency>
+        <!--RocketMQ -->
+        <dependency>
+            <groupId>org.apache.rocketmq</groupId>
+            <artifactId>rocketmq-client</artifactId>
+            <version>${rocketmq.version}</version>
+        </dependency>
+        <!--这是啥-->
+        <dependency>
+            <groupId>org.apache.rocketmq</groupId>
+            <artifactId>rocketmq-common</artifactId>
+            <version>${rocketmq.version}</version>
+        </dependency>
+        <!--这又是啥-->
+        <dependency>
+            <groupId>me.robin.spring</groupId>
+            <artifactId>rocketMQ</artifactId>
+            <version>1.1.2-SNAPSHOT</version>
         </dependency>
     </dependencies>
 
