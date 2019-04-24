@@ -1,4 +1,4 @@
-package org.seefly.mymq.rocketmq.RocketMQ;
+package org.seefly.mymq.rocketmq.api.consumer;
 
 import org.apache.rocketmq.client.consumer.DefaultMQPushConsumer;
 import org.apache.rocketmq.client.consumer.listener.ConsumeConcurrentlyStatus;
@@ -6,6 +6,7 @@ import org.apache.rocketmq.client.consumer.listener.MessageListenerConcurrently;
 import org.apache.rocketmq.client.exception.MQClientException;
 import org.apache.rocketmq.common.consumer.ConsumeFromWhere;
 import org.apache.rocketmq.common.protocol.heartbeat.MessageModel;
+import org.seefly.mymq.rocketmq.util.PropertiesReader;
 import org.springframework.core.io.DefaultResourceLoader;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
@@ -23,12 +24,9 @@ public class Consumer {
 
 
 
-    public static void main(String[] args) throws InterruptedException, MQClientException, IOException {
-        ResourceLoader  resourceLoader = new DefaultResourceLoader();
-        Resource resource = resourceLoader.getResource("classpath:private.properties");
-        Properties properties = new Properties();
-        properties.load(resource.getInputStream());
-        String nameserver = properties.getProperty("nameserver");
+    public static void main(String[] args) throws MQClientException, IOException {
+
+        String nameserver = PropertiesReader.build("private.properties").read("nameserver");
         //声明并初始化一个consumer
         //需要一个consumer group名字作为构造方法的参数，这里为consumer1
         DefaultMQPushConsumer consumer = new DefaultMQPushConsumer("consumer1");
