@@ -15,9 +15,27 @@ import java.io.IOException;
 import java.util.Properties;
 
 /**
+ *
+ * RocketMQ支持两种消息模式
+ * 1、集群(Clustering)
+ *      该模式下，同一个ConsumerGroup下的所有消费者只消费部分消息。
+ *      所有的消费者合起来处理的消息才是所有消息，这样可以达到负载均衡的目的。
+ *      (如果一个Topic下有6个MessageQueue，3个消费者，那么正常情况应该是每个消费者分配两个MessageQueue)
+ * 2、广播(Broadcasting)
+ *      该模式下，同一个ConsumerGroup的每个消费者都能够接收到该Topic的所有消息。
+ *      原理就是每个消费者都遍历该Topic对应的所有MessageQueue
+ *
+ * 消费者客户端
+ * 1、PushConsumer
+ *      这个东西名字里面有推送，其实内部原理还是通过长轮询定时的向Broker发送拉取消息请求。
+ *      这种方式的好处是不用自己控制消息的偏移量，只要消费消息就行了。而且自己可以控制获取消息的速度
+ *      觉得自己不行了，就慢点拿消息。而且也避免了由于broker推送消息浪费它自己性能的弊端
+ * 2、PollConsumer
+ *      这个是自己主动拉消息，需要自己记录当前消息偏移量，遍历所有的MessageQueue，针对不同状态做处理。
+ *      比较麻烦，但是好在自己能够控制很多东西。
+ *
  * @author liujianxin
  * @date 2018-07-12 10:33
- * 描述信息：
  **/
 public class Consumer {
 

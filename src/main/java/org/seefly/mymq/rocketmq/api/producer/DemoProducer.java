@@ -13,7 +13,17 @@ import org.seefly.mymq.rocketmq.util.PropertiesReader;
 import java.nio.charset.StandardCharsets;
 
 /**
- * 一个异步的生产者使用示例
+ * 生产者启动的时候会跟NameServer通讯，拿到路由信息，随后以30s/次的频率拉取路由信息。
+ * 路由信息也就是哪些Topic放在了哪些Broker上，然后根据需要跟指定的Broker建立长连接
+ * 在发送消息前，根据Topic的路由信息，拿到该Topic的消息队列，然后轮询的方式
+ * 向某个队列发送消息。
+ *
+ * 另外对于Broker，每一个Broker都通过唯一的CommitLog文件进行实际的消息存储，包括元数据及消息体。
+ * 由于这一个文件存储所有类型的消息，那么再查询Topic的时候就很慢了，所以会有一个类似二级索引的consumerLog的文件
+ * 这个文件和Topic是一对一的关系(我猜的)，它存储的内容就是该topic下的每个消息对应在commitLog文件中的偏移量以及大小。
+ * 这样就能根据consumerLog来很快的定位消息了。
+ *
+ * 生产者使用示例
  * @author liujianxin
  * @date 2019-04-24 14:09
  */
@@ -32,6 +42,23 @@ public class DemoProducer {
 
         //sendOneway(producer,message);
         producer.shutdown();
+    }
+
+
+    /**
+     * 自定义发送消息
+     * 默认情况下一个topic下有多个MessageQueue，你发送消息的时候
+     * 具体这个消息是发送到哪个队列上是不确定的。如果业务需求根据消息的
+     * 某个字段判断进而发送到不同的队列上，可以使用队列选择器。或者直接传入一个队列。
+     * 我用过一次就是业务需要消息有序，根据客户端id进行散列再对队列长度取模，拿到队列索引
+     * 这样一个客户端的消息就只能发送到一个队列里面了。
+     */
+    public static  void sendMessageByCustom(DefaultMQProducer producer,Message message) throws InterruptedException, RemotingException, MQClientException, MQBrokerException {
+        producer.send(message, (mqs, msg, arg) -> {
+            int index = arg.hashCode() % mqs.size();
+            return mqs.get(index);
+        },"Client_ID");
+
     }
 
 
