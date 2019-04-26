@@ -1,0 +1,13 @@
+logserver:
+  namesrv-addr: 119.23.252.178:9876
+spring:
+  application:
+    name: seefly
+  rocketmq:
+    namesrv-addr: 119.23.252.178:9876
+    producer:
+      instanceName: ROCKETMQ_DEMO
+    consumer:
+      subscribe: TOPIC_A
+    topic:
+      event-topic: TOPIC_B

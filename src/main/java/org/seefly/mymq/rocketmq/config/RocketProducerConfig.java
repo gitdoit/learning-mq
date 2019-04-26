@@ -58,7 +58,6 @@ public class RocketProducerConfig {
      */
     @Bean(destroyMethod = "shutdown")
     @Lazy
-    @ConditionalOnMissingBean(value = MQProducer.class, name = "cmdProducer")
     public DefaultMQProducer cmdProducer() throws MQClientException {
         DefaultMQProducer producer = new DefaultMQProducer(rocketConf.getConsumer().getGroup(applicationName) + "_" + activeProfiles, RPC_HOOK);
         producer.setNamesrvAddr(rocketConf.getNamesrvAddr());
@@ -71,6 +70,7 @@ public class RocketProducerConfig {
         return producer;
     }
 
+    @ConditionalOnMissingBean(value = MQProducer.class, name = "cmdProducer")
     @Bean(name = "transactionMQProducer", destroyMethod = "shutdown")
     @Lazy
     public TransactionMQProducer transactionMQProducer() throws MQClientException {

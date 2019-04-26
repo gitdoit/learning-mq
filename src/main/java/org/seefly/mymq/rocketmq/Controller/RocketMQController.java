@@ -13,7 +13,7 @@ import javax.annotation.Resource;
  * @date 2018-07-12 16:59
  * 描述信息：
  **/
-@RestController
+//@RestController
 public class RocketMQController {
     @Resource(name = "cmdProducer")
     private DefaultMQProducer defaultMQProducer;
