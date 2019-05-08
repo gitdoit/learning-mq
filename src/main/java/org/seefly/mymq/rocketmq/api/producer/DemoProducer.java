@@ -15,7 +15,7 @@ import java.nio.charset.StandardCharsets;
 /**
  * 生产者启动的时候会跟NameServer通讯，拿到路由信息，随后以30s/次的频率拉取路由信息。
  * 路由信息也就是哪些Topic放在了哪些Broker上，然后根据需要跟指定的Broker建立长连接
- * 在发送消息前，根据Topic的路由信息，拿到该Topic的消息队列，然后轮询的方式
+ * 在发送消息前，根据Topic找到指定的路由信息(TopicPublishInfo)，拿到该Topic的消息队列，然后轮询的方式
  * 向某个队列发送消息。
  *
  * 另外对于Broker，每一个Broker都通过唯一的CommitLog文件进行实际的消息存储，包括元数据及消息体。

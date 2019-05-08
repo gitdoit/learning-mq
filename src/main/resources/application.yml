@@ -1,10 +1,8 @@
-logserver:
-  namesrv-addr: 119.23.252.178:9876
 spring:
   application:
     name: seefly
   rocketmq:
-    namesrv-addr: 119.23.252.178:9876
+    namesrv-addr: 192.168.0.160:9876
     producer:
       instanceName: ROCKETMQ_DEMO
     consumer:
