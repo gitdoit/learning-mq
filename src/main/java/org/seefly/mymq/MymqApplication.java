@@ -1,6 +1,5 @@
 package org.seefly.mymq;
 
-import cn.worken.common.log.EnableLogService;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
