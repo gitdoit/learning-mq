@@ -1,4 +1,4 @@
-package org.seefly.mymq.rocketmq.api.producer;
+package org.seefly.mymq.rocketmq.demo.basis;
 
 import org.apache.rocketmq.client.exception.MQBrokerException;
 import org.apache.rocketmq.client.exception.MQClientException;
@@ -22,6 +22,13 @@ import java.nio.charset.StandardCharsets;
  * 由于这一个文件存储所有类型的消息，那么再查询Topic的时候就很慢了，所以会有一个类似二级索引的consumerLog的文件
  * 这个文件和Topic是一对一的关系(我猜的)，它存储的内容就是该topic下的每个消息对应在commitLog文件中的偏移量以及大小。
  * 这样就能根据consumerLog来很快的定位消息了。
+ *
+ *
+ * 重复消费的问题
+ *  RocketMQ只保证消息一定投递，但不保证消息不会重复，在极端的网络环境下，生产者的消息投递到Broker之后，Broker的确认消息可能会丢失
+ *  这样生产者会重复投递。解决重复消费的方法有两种，只能在消费者端做处理
+ *  1、实现消费逻辑幂等性，即多次调用和一次调用的效果是一样的
+ *  2、本地维护一个已消费的消息记录，消费之前查记录。
  *
  * 生产者使用示例
  * @author liujianxin

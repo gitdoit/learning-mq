@@ -1,4 +1,4 @@
-package org.seefly.mymq.rocketmq.api.consumer;
+package org.seefly.mymq.rocketmq.demo.basis;
 
 import org.apache.rocketmq.client.consumer.DefaultMQPushConsumer;
 import org.apache.rocketmq.client.consumer.listener.ConsumeConcurrentlyStatus;
@@ -33,7 +33,7 @@ import java.io.IOException;
  * @author liujianxin
  * @date 2018-07-12 10:33
  **/
-public class Consumer {
+public class DemoConsumer {
 
 
 
@@ -80,7 +80,7 @@ public class Consumer {
         //调用start()方法启动consumer
         consumer.start();
 
-        System.out.println("Consumer Started.");
+        System.out.println("DemoConsumer Started.");
     }
 
 }
