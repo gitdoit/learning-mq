@@ -12,6 +12,8 @@ import org.seefly.mymq.rocketmq.util.PropertiesReader;
 import java.io.UnsupportedEncodingException;
 
 /**
+ *
+ *
  * @author liujianxin
  * @date 2019-05-16 19:08
  */
@@ -28,7 +30,8 @@ public class TagProducer {
             Message msg = new Message("TagFilterTest",
                     tags[i % tags.length],
                     "Hello world".getBytes(RemotingHelper.DEFAULT_CHARSET));
-
+            // 用来给消息添加额外的属性，这样，消费者就可以使用sql语句根据这些属性在Broker上进行消息过滤了
+            msg.putUserProperty("a",String.valueOf(i));
             SendResult sendResult = producer.send(msg);
             System.out.printf("%s%n", sendResult);
         }

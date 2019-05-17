@@ -45,8 +45,8 @@ public class DemoProducer {
         producer.start();
         Message message = new Message("TopicA","async","Hello RocketMQ".getBytes(StandardCharsets.UTF_8));
         // 异步回调的方法
-        sendAsyncAndCallBack(producer,message);
-
+        //sendAsyncAndCallBack(producer,message);
+        syncSend(producer);
         //sendOneway(producer,message);
         producer.shutdown();
     }
