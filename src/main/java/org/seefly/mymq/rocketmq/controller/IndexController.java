@@ -1,4 +1,4 @@
-package org.seefly.mymq.rocketmq.Controller;
+package org.seefly.mymq.rocketmq.controller;
 
 import org.seefly.mymq.rocketmq.Event.MyEvent;
 import org.springframework.beans.factory.annotation.Autowired;

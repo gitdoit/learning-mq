@@ -1,4 +1,4 @@
-package org.seefly.mymq.rocketmq.Controller;
+package org.seefly.mymq.rocketmq.controller;
 
 import org.seefly.mymq.rocketmq.dto.ModifyUserDto;
 import org.seefly.mymq.rocketmq.dto.ResDto;
