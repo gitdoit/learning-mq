@@ -20,13 +20,22 @@ public class MyFuckingTransactionListenerImpl implements TransactionListener {
      * 预备！
      * 跑！！
      * "Transaction.begin" 消息发送成功之后，这个方法被调用。
+     * 这里执行事务逻辑
      */
     @Override
     public LocalTransactionState executeLocalTransaction(Message msg, Object arg) {
         int value = transactionIndex.getAndIncrement();
         int status = value % 3;
         localTrans.put(msg.getTransactionId(), status);
-        return LocalTransactionState.UNKNOW;
+        try {
+            Thread.sleep(20);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+            return LocalTransactionState.ROLLBACK_MESSAGE;
+        }catch (Exception ex){
+            return LocalTransactionState.UNKNOW;
+        }
+        return LocalTransactionState.COMMIT_MESSAGE;
     }
 
     /**
