@@ -1,7 +1,6 @@
 package org.seefly.mymq.rocketmq.demo.transaction;
 
 import org.apache.rocketmq.client.exception.MQClientException;
-import org.apache.rocketmq.client.producer.LocalTransactionState;
 import org.apache.rocketmq.client.producer.SendResult;
 import org.apache.rocketmq.client.producer.TransactionMQProducer;
 import org.apache.rocketmq.common.message.Message;
