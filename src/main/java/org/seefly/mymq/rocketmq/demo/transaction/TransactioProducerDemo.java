@@ -8,10 +8,7 @@ import org.apache.rocketmq.remoting.common.RemotingHelper;
 import org.seefly.mymq.rocketmq.util.PropertiesReader;
 
 import java.io.UnsupportedEncodingException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.SynchronousQueue;
-import java.util.concurrent.ThreadPoolExecutor;
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.*;
 
 /**
  * 事务
@@ -53,11 +50,7 @@ public class TransactioProducerDemo {
         //producer.setCheckRequestHoldMax(4);
 
         // 这个线程池会不会把系统搞炸掉，你瞅瞅这些参数 这是人干的事吗
-        ExecutorService executorService = new ThreadPoolExecutor(2, 5,60L, TimeUnit.SECONDS,new SynchronousQueue<>(),r -> {
-            Thread t = new Thread();
-            t.setName("蓝Biubiu的小弟");
-            return t;
-        });
+        ExecutorService executorService = new ThreadPoolExecutor(2, 5,60L, TimeUnit.SECONDS,new SynchronousQueue<>(), (ThreadFactory) Thread::new);
         // 那我还是自定义吧
         producer.setExecutorService(executorService);
         // 事务监听器，控制事务提交、回滚。提供回查功能

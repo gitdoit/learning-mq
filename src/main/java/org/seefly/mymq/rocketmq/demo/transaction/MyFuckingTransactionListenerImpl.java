@@ -1,5 +1,6 @@
 package org.seefly.mymq.rocketmq.demo.transaction;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.rocketmq.client.producer.LocalTransactionState;
 import org.apache.rocketmq.client.producer.TransactionListener;
 import org.apache.rocketmq.common.message.Message;
@@ -12,6 +13,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  * @author liujianxin
  * @date 2019-05-20 14:58
  */
+@Slf4j
 public class MyFuckingTransactionListenerImpl implements TransactionListener {
     private AtomicInteger transactionIndex = new AtomicInteger(0);
     private ConcurrentHashMap<String, Integer> localTrans = new ConcurrentHashMap<>();
@@ -28,14 +30,16 @@ public class MyFuckingTransactionListenerImpl implements TransactionListener {
         int status = value % 3;
         localTrans.put(msg.getTransactionId(), status);
         try {
-            Thread.sleep(20);
+            // 这块模拟执行本地事务逻辑
+            Thread.sleep(10);
         } catch (InterruptedException e) {
             e.printStackTrace();
             return LocalTransactionState.ROLLBACK_MESSAGE;
         }catch (Exception ex){
             return LocalTransactionState.UNKNOW;
         }
-        return LocalTransactionState.COMMIT_MESSAGE;
+        // 返回UNKNOW 让MQ回查
+        return LocalTransactionState.UNKNOW;
     }
 
     /**
@@ -44,6 +48,7 @@ public class MyFuckingTransactionListenerImpl implements TransactionListener {
      */
     @Override
     public LocalTransactionState checkLocalTransaction(MessageExt msg) {
+        log.info("事务回查！！！");
         Integer status = localTrans.get(msg.getTransactionId());
         if (null != status) {
             switch (status) {
