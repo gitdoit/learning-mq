@@ -1,6 +1,6 @@
-package org.seefly.mymq.rocketmq.Service;
+package org.seefly.mymq.rocketmq.service;
 
-import org.seefly.mymq.rocketmq.Event.MyEvent;
+import org.seefly.mymq.rocketmq.event.MyEvent;
 import org.seefly.mymq.rocketmq.listener.MessageListener;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;

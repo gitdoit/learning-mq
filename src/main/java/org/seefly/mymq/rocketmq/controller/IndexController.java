@@ -1,6 +1,6 @@
 package org.seefly.mymq.rocketmq.controller;
 
-import org.seefly.mymq.rocketmq.Event.MyEvent;
+import org.seefly.mymq.rocketmq.event.MyEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.web.bind.annotation.RequestMapping;

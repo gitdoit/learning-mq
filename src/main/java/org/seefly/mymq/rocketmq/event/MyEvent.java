@@ -1,4 +1,4 @@
-package org.seefly.mymq.rocketmq.Event;
+package org.seefly.mymq.rocketmq.event;
 
 import lombok.Getter;
 import org.springframework.context.ApplicationEvent;
